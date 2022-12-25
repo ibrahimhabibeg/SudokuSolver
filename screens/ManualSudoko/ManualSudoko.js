@@ -2,7 +2,7 @@ import { useState } from "react";
 import { View } from "react-native";
 import Gameboard from "../../components/Gameboard/Gameboard";
 
-function createStartingGameBoard() {
+const createStartingGameBoard = () => {
   const defaultGameBoard = [];
   for (let i = 0; i < 9; i++) {
     const row = [];
@@ -12,14 +12,23 @@ function createStartingGameBoard() {
     defaultGameBoard.push(row);
   }
   return defaultGameBoard;
-}
+};
 
 export default function ManualSudoko() {
   const [gameBoard, setGameBoard] = useState(createStartingGameBoard());
+  const [selectedCell, setSelectedCell] = useState([0, 0]);
+
+  const changeSelectedCell = (row, col) => {
+    setSelectedCell([row, col]);
+  };
 
   return (
-    <View style={{flex:1}}>
-      <Gameboard gameBoard={gameBoard}/>
+    <View style={{ flex: 1 }}>
+      <Gameboard
+        gameBoard={gameBoard}
+        selectedCell={selectedCell}
+        changeSelectedCell={changeSelectedCell}
+      />
     </View>
   );
 }
