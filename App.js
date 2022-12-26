@@ -1,7 +1,7 @@
-import ManualSudoko from './screens/ManualSudoko/ManualSudoko';
+import Sudoku from './screens/Sudoku/Sudoku';
 
 export default function App() {
   return (
-    <ManualSudoko/>
+    <Sudoku/>
   );
 }

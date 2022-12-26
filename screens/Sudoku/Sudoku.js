@@ -14,7 +14,7 @@ const createStartingGameBoard = () => {
   return defaultGameBoard;
 };
 
-export default function ManualSudoko() {
+export default function Sudoku() {
   const [gameBoard, setGameBoard] = useState(createStartingGameBoard());
   const [selectedCell, setSelectedCell] = useState([0, 0]);
 

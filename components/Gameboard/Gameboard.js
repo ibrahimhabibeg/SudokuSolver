@@ -1,6 +1,6 @@
 import { TouchableHighlight, View, Text } from "react-native";
 import styles from "./Gameboard.styles";
-import { getSquare } from "../../util/sudoko.util";
+import { getSquare } from "../../util/sudoku.util";
 
 export default function Gameboard({
   gameBoard,
