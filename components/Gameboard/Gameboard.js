@@ -38,6 +38,10 @@ export default function Gameboard({
                         getSquare(rowNo, colNo)
                     ? styles.highlightedCell
                     : {},
+                  cell !== "" &&
+                  gameBoard[selectedCell[0]][selectedCell[1]] === cell
+                    ? styles.selectedCell
+                    : {},
                 ]}
               >
                 {cell}

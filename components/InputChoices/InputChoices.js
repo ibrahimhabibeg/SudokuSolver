@@ -6,6 +6,7 @@ export default function InputChoices({ selectedValue, handleClick }) {
     <View style={styles.container}>
       {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((val) => (
         <TouchableHighlight
+          underlayColor={styles.highlight.backgroundColor}
           key={`choice-${val}`}
           onPress={() => handleClick(val)}
           style={[
