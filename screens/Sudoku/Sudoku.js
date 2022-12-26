@@ -23,14 +23,26 @@ export default function Sudoku() {
     setSelectedCell([row, col]);
   };
 
+  const updateSelectedCellValue = (val) => {
+    setGameBoard((currentBoard) => {
+      if (currentBoard[selectedCell[0]][selectedCell[1]] === val)
+        currentBoard[selectedCell[0]][selectedCell[1]] = "";
+      else currentBoard[selectedCell[0]][selectedCell[1]] = val;
+      return [...currentBoard];
+    });
+  };
+
   return (
-    <View style={{ flex: 1,alignItems:"center" }}>
+    <View style={{ flex: 1, alignItems: "center" }}>
       <Gameboard
         gameBoard={gameBoard}
         selectedCell={selectedCell}
         changeSelectedCell={changeSelectedCell}
       />
-      <InputChoices selectedValue={gameBoard[selectedCell[0]][selectedCell[1]]}/>
+      <InputChoices
+        selectedValue={gameBoard[selectedCell[0]][selectedCell[1]]}
+        handleClick={updateSelectedCellValue}
+      />
     </View>
   );
 }
