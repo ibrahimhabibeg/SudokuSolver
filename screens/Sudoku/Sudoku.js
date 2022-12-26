@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { View } from "react-native";
 import Gameboard from "../../components/Gameboard/Gameboard";
+import InputChoices from "../../components/InputChoices/InputChoices";
 
 const createStartingGameBoard = () => {
   const defaultGameBoard = [];
@@ -23,12 +24,13 @@ export default function Sudoku() {
   };
 
   return (
-    <View style={{ flex: 1 }}>
+    <View style={{ flex: 1,alignItems:"center" }}>
       <Gameboard
         gameBoard={gameBoard}
         selectedCell={selectedCell}
         changeSelectedCell={changeSelectedCell}
       />
+      <InputChoices selectedValue={gameBoard[selectedCell[0]][selectedCell[1]]}/>
     </View>
   );
 }
