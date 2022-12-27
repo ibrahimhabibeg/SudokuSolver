@@ -58,6 +58,9 @@ const styles = StyleSheet.create({
   highlightedCell: {
     backgroundColor: "rgba(185, 217, 235,.5)",
   },
+  errorCell: {
+    backgroundColor: "rgba(255, 0, 0,.5)",
+  },
 });
 
 export default styles;

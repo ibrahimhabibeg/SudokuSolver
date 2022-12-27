@@ -6,6 +6,9 @@ export default function Gameboard({
   gameBoard,
   selectedCell,
   changeSelectedCell,
+  rowsCounter,
+  colsCounter,
+  squaresCounter,
 }) {
   return (
     <View style={styles.board}>
@@ -41,6 +44,11 @@ export default function Gameboard({
                   cell !== "" &&
                   gameBoard[selectedCell[0]][selectedCell[1]] === cell
                     ? styles.selectedCell
+                    : {},
+                  rowsCounter[rowNo][cell - 1] > 1 ||
+                  colsCounter[colNo][cell - 1] > 1 ||
+                  squaresCounter[getSquare(rowNo, colNo)][cell - 1] > 1
+                    ? styles.errorCell
                     : {},
                 ]}
               >
