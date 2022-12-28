@@ -2,7 +2,7 @@ import { StyleSheet, Dimensions } from "react-native";
 
 const styles = StyleSheet.create({
   board: {
-    flex: 4,
+    flex: 7,
     justifyContent: "center",
     padding: 0,
   },

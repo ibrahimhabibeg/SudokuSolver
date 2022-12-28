@@ -2,7 +2,8 @@ import { useState } from "react";
 import { View } from "react-native";
 import Gameboard from "../../components/Gameboard/Gameboard";
 import InputChoices from "../../components/InputChoices/InputChoices";
-import { getSquare } from "../../util/sudoku.util";
+import Submit from "../../components/Submit/Submit";
+import { solveSudoko, getSquare } from "../../util/sudoku.util";
 
 const createStartingGameBoard = () => {
   const defaultGameBoard = [];
@@ -36,7 +37,7 @@ export default function Sudoku() {
     createStartingCounters()
   );
   const [selectedCell, setSelectedCell] = useState([0, 0]);
-  let noRuleBreaks = 0;
+  const [noRuleBreaks, setNoRuleBreaks] = useState(0);
 
   const changeSelectedCell = (row, col) => {
     setSelectedCell([row, col]);
@@ -45,12 +46,12 @@ export default function Sudoku() {
   const updateRowsCounter = (changeToCounter, val) => {
     setRowsCounter((oldRows) => {
       if (changeToCounter === 1 && oldRows[selectedCell[0]][val - 1] === 1)
-        noRuleBreaks++;
+        setNoRuleBreaks((x) => x + 1);
       else if (
         changeToCounter === -1 &&
         oldRows[selectedCell[0]][val - 1] === 2
       )
-        noRuleBreaks--;
+        setNoRuleBreaks((x) => x - 1);
       oldRows[selectedCell[0]][val - 1] += changeToCounter;
       return [...oldRows];
     });
@@ -59,12 +60,12 @@ export default function Sudoku() {
   const updateColsCounter = (changeToCounter, val) => {
     setColsCounter((oldCols) => {
       if (changeToCounter === 1 && oldCols[selectedCell[1]][val - 1] === 1)
-        noRuleBreaks++;
+        setNoRuleBreaks((x) => x + 1);
       else if (
         changeToCounter === -1 &&
         oldCols[selectedCell[1]][val - 1] === 2
       )
-        noRuleBreaks--;
+        setNoRuleBreaks((x) => x - 1);
       oldCols[selectedCell[1]][val - 1] += changeToCounter;
       return [...oldCols];
     });
@@ -76,12 +77,12 @@ export default function Sudoku() {
         changeToCounter === 1 &&
         oldSquares[getSquare(selectedCell[0], selectedCell[1])][val - 1] === 1
       )
-        noRuleBreaks++;
+        setNoRuleBreaks((x) => x + 1);
       else if (
         changeToCounter === -1 &&
         oldSquares[getSquare(selectedCell[0], selectedCell[1])][val - 1] === 2
       )
-        noRuleBreaks--;
+        setNoRuleBreaks((x) => x - 1);
       oldSquares[getSquare(selectedCell[0], selectedCell[1])][val - 1] +=
         changeToCounter;
       return [...oldSquares];
@@ -102,6 +103,18 @@ export default function Sudoku() {
     });
   };
 
+  const getSolution = () => {
+    setGameBoard((currentBoard) => [
+      ...solveSudoko(
+        currentBoard,
+        rowsCounter,
+        colsCounter,
+        squaresCounter,
+        noRuleBreaks
+      ),
+    ]);
+  };
+
   return (
     <View style={{ flex: 1, alignItems: "center" }}>
       <Gameboard
@@ -116,6 +129,7 @@ export default function Sudoku() {
         selectedValue={gameBoard[selectedCell[0]][selectedCell[1]]}
         handleClick={updateSelectedCellValue}
       />
+      <Submit noRuleBreaks={noRuleBreaks} submit={getSolution} />
     </View>
   );
 }

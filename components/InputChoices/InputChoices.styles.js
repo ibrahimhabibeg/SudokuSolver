@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
     width: (0.8 * Dimensions.get("window").width) / 10,
     maxHeight: 0.9 * 50,
     maxWidth: 0.9 * 50,
-    borderRadius: 15,
+    borderRadius: .34 * Math.min(0.9 * 50, (0.8 * Dimensions.get("window").width) / 10),
   },
   value: {
     height: "100%",
