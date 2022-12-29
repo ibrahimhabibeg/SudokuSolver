@@ -44,62 +44,36 @@ export default function Sudoku() {
     setSelectedCell([row, col]);
   };
 
-  const updateRowsCounter = (changeToCounter, val) => {
-    setRowsCounter((oldRows) => {
-      if (changeToCounter === 1 && oldRows[selectedCell[0]][val - 1] === 1)
-        setNoRuleBreaks((x) => x + 1);
-      else if (
-        changeToCounter === -1 &&
-        oldRows[selectedCell[0]][val - 1] === 2
-      )
-        setNoRuleBreaks((x) => x - 1);
-      oldRows[selectedCell[0]][val - 1] += changeToCounter;
-      return [...oldRows];
+  const updateCounter = (setCounter, selectedIndex, oldVal, newVal) => {
+    setCounter((counter) => {
+      if (oldVal !== "") {
+        counter[selectedIndex][oldVal - 1]--;
+        if (counter[selectedIndex][oldVal - 1] === 1)
+          setNoRuleBreaks((x) => x - 1);
+      }
+      if (newVal !== oldVal) {
+        counter[selectedIndex][newVal - 1]++;
+        if (counter[selectedIndex][newVal - 1] === 2)
+          setNoRuleBreaks((x) => x + 1);
+      }
+      return [...counter];
     });
   };
 
-  const updateColsCounter = (changeToCounter, val) => {
-    setColsCounter((oldCols) => {
-      if (changeToCounter === 1 && oldCols[selectedCell[1]][val - 1] === 1)
-        setNoRuleBreaks((x) => x + 1);
-      else if (
-        changeToCounter === -1 &&
-        oldCols[selectedCell[1]][val - 1] === 2
-      )
-        setNoRuleBreaks((x) => x - 1);
-      oldCols[selectedCell[1]][val - 1] += changeToCounter;
-      return [...oldCols];
-    });
-  };
-
-  const updateSquaresCounter = (changeToCounter, val) => {
-    setSquaresCounter((oldSquares) => {
-      if (
-        changeToCounter === 1 &&
-        oldSquares[getSquare(selectedCell[0], selectedCell[1])][val - 1] === 1
-      )
-        setNoRuleBreaks((x) => x + 1);
-      else if (
-        changeToCounter === -1 &&
-        oldSquares[getSquare(selectedCell[0], selectedCell[1])][val - 1] === 2
-      )
-        setNoRuleBreaks((x) => x - 1);
-      oldSquares[getSquare(selectedCell[0], selectedCell[1])][val - 1] +=
-        changeToCounter;
-      return [...oldSquares];
-    });
-  };
-
-  const updateSelectedCellValue = (val) => {
+  const updateSelectedCellValue = (newVal) => {
     setGameBoard((currentBoard) => {
-      let changeToCounter = 1;
-      if (currentBoard[selectedCell[0]][selectedCell[1]].val === val) {
+      const oldVal = currentBoard[selectedCell[0]][selectedCell[1]].val;
+      if (currentBoard[selectedCell[0]][selectedCell[1]].val === newVal)
         currentBoard[selectedCell[0]][selectedCell[1]].val = "";
-        changeToCounter = -1;
-      } else currentBoard[selectedCell[0]][selectedCell[1]].val = val;
-      updateRowsCounter(changeToCounter, val);
-      updateColsCounter(changeToCounter, val);
-      updateSquaresCounter(changeToCounter, val);
+      else currentBoard[selectedCell[0]][selectedCell[1]].val = newVal;
+      updateCounter(setRowsCounter, selectedCell[0], oldVal, newVal);
+      updateCounter(setColsCounter, selectedCell[1], oldVal, newVal);
+      updateCounter(
+        setSquaresCounter,
+        getSquare(selectedCell[0], selectedCell[1]),
+        oldVal,
+        newVal
+      );
       return [...currentBoard];
     });
   };
