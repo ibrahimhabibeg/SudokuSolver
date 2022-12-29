@@ -39,6 +39,7 @@ export default function Sudoku() {
   const [selectedCell, setSelectedCell] = useState([0, 0]);
   const [noRuleBreaks, setNoRuleBreaks] = useState(0);
   const [didShowSolution, setDidShowSolution] = useState(false);
+  const [doesSolutionExists, setDoesSolutionExists] = useState(true);
 
   const changeSelectedCell = (row, col) => {
     setSelectedCell([row, col]);
@@ -61,8 +62,10 @@ export default function Sudoku() {
   };
 
   const updateSelectedCellValue = (newVal) => {
+    setDoesSolutionExists(true);
     setGameBoard((currentBoard) => {
       const oldVal = currentBoard[selectedCell[0]][selectedCell[1]].val;
+      currentBoard[selectedCell[0]][selectedCell[1]].isByUser = true;
       if (currentBoard[selectedCell[0]][selectedCell[1]].val === newVal)
         currentBoard[selectedCell[0]][selectedCell[1]].val = "";
       else currentBoard[selectedCell[0]][selectedCell[1]].val = newVal;
@@ -79,16 +82,18 @@ export default function Sudoku() {
   };
 
   const getSolution = () => {
-    setGameBoard((currentBoard) => [
-      ...solveSudoko(
+    setGameBoard((currentBoard) => {
+      const { solution, isCorrectSol } = solveSudoko(
         currentBoard,
         rowsCounter,
         colsCounter,
         squaresCounter,
         noRuleBreaks
-      ),
-    ]);
-    setDidShowSolution(true);
+      );
+      setDoesSolutionExists(isCorrectSol);
+      setDidShowSolution(isCorrectSol);
+      return [...solution];
+    });
   };
 
   const restartGame = () => {
@@ -99,6 +104,7 @@ export default function Sudoku() {
     setSelectedCell([0, 0]);
     setNoRuleBreaks(0);
     setDidShowSolution(false);
+    setDoesSolutionExists(true);
   };
 
   return (
@@ -121,6 +127,7 @@ export default function Sudoku() {
         submit={getSolution}
         restartGame={restartGame}
         didShowSolution={didShowSolution}
+        doesSolutionExists={doesSolutionExists}
       />
     </View>
   );

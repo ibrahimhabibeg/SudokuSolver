@@ -6,8 +6,8 @@ export const getSquare = (row, col) => {
 
 export const solveSudoko = (gameBoard, rows, cols, squares, noRuleBreaks) => {
   if (noRuleBreaks > 0) return gameBoard;
-  solveSudokoUtil(gameBoard, rows, cols, squares, 0);
-  return gameBoard;
+  const isCorrectSol = solveSudokoUtil(gameBoard, rows, cols, squares, 0);
+  return { isCorrectSol, solution: gameBoard };
 };
 
 const solveSudokoUtil = (gameBoard, rows, cols, squares, cell) => {

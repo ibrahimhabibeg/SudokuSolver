@@ -23,6 +23,9 @@ const styles = StyleSheet.create({
   disabledText: {
     color: "#666666",
   },
+  noSolution:{
+    backgroundColor: "rgba(255,0,0,.7)",
+  }
 });
 
 export default styles;
