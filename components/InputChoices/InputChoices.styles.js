@@ -14,18 +14,27 @@ const styles = StyleSheet.create({
     width: (0.8 * Dimensions.get("window").width) / 10,
     maxHeight: 0.9 * 50,
     maxWidth: 0.9 * 50,
-    borderRadius: .34 * Math.min(0.9 * 50, (0.8 * Dimensions.get("window").width) / 10),
+    borderRadius:
+      0.34 * Math.min(0.9 * 50, (0.8 * Dimensions.get("window").width) / 10),
   },
   value: {
     height: "100%",
     width: "100%",
     textAlignVertical: "center",
     textAlign: "center",
-    fontSize:
-       Math.min(0.7 * 0.9 * 50, (0.7 * 0.8 * Dimensions.get("window").width) / 10),
+    fontSize: Math.min(
+      0.7 * 0.9 * 50,
+      (0.7 * 0.8 * Dimensions.get("window").width) / 10
+    ),
   },
   highlight: {
     backgroundColor: "rgb(137, 207, 240)",
+  },
+  disabled: {
+    backgroundColor: "#cccccc",
+  },
+  disabledText: {
+    color: "#666666",
   },
 });
 

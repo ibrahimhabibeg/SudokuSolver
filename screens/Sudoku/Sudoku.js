@@ -38,6 +38,7 @@ export default function Sudoku() {
   );
   const [selectedCell, setSelectedCell] = useState([0, 0]);
   const [noRuleBreaks, setNoRuleBreaks] = useState(0);
+  const [didShowSolution, setDidShowSolution] = useState(false);
 
   const changeSelectedCell = (row, col) => {
     setSelectedCell([row, col]);
@@ -113,6 +114,17 @@ export default function Sudoku() {
         noRuleBreaks
       ),
     ]);
+    setDidShowSolution(true);
+  };
+
+  const restartGame = () => {
+    setGameBoard(createStartingGameBoard());
+    setRowsCounter(createStartingCounters());
+    setColsCounter(createStartingCounters());
+    setSquaresCounter(createStartingCounters());
+    setSelectedCell([0, 0]);
+    setNoRuleBreaks(0);
+    setDidShowSolution(false);
   };
 
   return (
@@ -128,8 +140,14 @@ export default function Sudoku() {
       <InputChoices
         selectedValue={gameBoard[selectedCell[0]][selectedCell[1]]}
         handleClick={updateSelectedCellValue}
+        didShowSolution={didShowSolution}
       />
-      <Submit noRuleBreaks={noRuleBreaks} submit={getSolution} />
+      <Submit
+        noRuleBreaks={noRuleBreaks}
+        submit={getSolution}
+        restartGame={restartGame}
+        didShowSolution={didShowSolution}
+      />
     </View>
   );
 }
