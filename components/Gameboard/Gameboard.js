@@ -41,18 +41,19 @@ export default function Gameboard({
                         getSquare(rowNo, colNo)
                     ? styles.highlightedCell
                     : {},
-                  cell !== "" &&
-                  gameBoard[selectedCell[0]][selectedCell[1]] === cell
+                  cell.val !== "" &&
+                  gameBoard[selectedCell[0]][selectedCell[1]].val === cell.val
                     ? styles.selectedCell
                     : {},
-                  rowsCounter[rowNo][cell - 1] > 1 ||
-                  colsCounter[colNo][cell - 1] > 1 ||
-                  squaresCounter[getSquare(rowNo, colNo)][cell - 1] > 1
+                  rowsCounter[rowNo][cell.val - 1] > 1 ||
+                  colsCounter[colNo][cell.val - 1] > 1 ||
+                  squaresCounter[getSquare(rowNo, colNo)][cell.val - 1] > 1
                     ? styles.errorCell
                     : {},
+                  !cell.isByUser ? styles.solvedCell : {},
                 ]}
               >
-                {cell}
+                {cell.val}
               </Text>
             </TouchableHighlight>
           ))}

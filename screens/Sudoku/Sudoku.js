@@ -10,7 +10,7 @@ const createStartingGameBoard = () => {
   for (let i = 0; i < 9; i++) {
     const row = [];
     for (let j = 0; j < 9; j++) {
-      row.push("");
+      row.push({ isByUser: true, val: "" });
     }
     defaultGameBoard.push(row);
   }
@@ -93,10 +93,10 @@ export default function Sudoku() {
   const updateSelectedCellValue = (val) => {
     setGameBoard((currentBoard) => {
       let changeToCounter = 1;
-      if (currentBoard[selectedCell[0]][selectedCell[1]] === val) {
-        currentBoard[selectedCell[0]][selectedCell[1]] = "";
+      if (currentBoard[selectedCell[0]][selectedCell[1]].val === val) {
+        currentBoard[selectedCell[0]][selectedCell[1]].val = "";
         changeToCounter = -1;
-      } else currentBoard[selectedCell[0]][selectedCell[1]] = val;
+      } else currentBoard[selectedCell[0]][selectedCell[1]].val = val;
       updateRowsCounter(changeToCounter, val);
       updateColsCounter(changeToCounter, val);
       updateSquaresCounter(changeToCounter, val);
@@ -138,7 +138,7 @@ export default function Sudoku() {
         squaresCounter={squaresCounter}
       />
       <InputChoices
-        selectedValue={gameBoard[selectedCell[0]][selectedCell[1]]}
+        selectedValue={gameBoard[selectedCell[0]][selectedCell[1]].val}
         handleClick={updateSelectedCellValue}
         didShowSolution={didShowSolution}
       />

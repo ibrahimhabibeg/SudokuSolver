@@ -18,16 +18,17 @@ const solveSudokoUtil = (gameBoard, rows, cols, squares, cell) => {
     if (solveSudokoUtil(gameBoard, rows, cols, squares, cell + 1)) return true;
     else return false;
   }
+  gameBoard[row][col].isByUser = false;
   for (let i = 1; i <= 9; i++) {
     if (isValidMove(rows, cols, squares, row, col, i)) {
-      gameBoard[row][col] = i;
+      gameBoard[row][col].val = i;
       rows[row][i - 1]++;
       cols[col][i - 1]++;
       squares[getSquare(row, col)][i - 1]++;
       if (solveSudokoUtil(gameBoard, rows, cols, squares, cell + 1))
         return true;
       else {
-        gameBoard[row][col] = DEFAULT_VAL;
+        gameBoard[row][col].val = DEFAULT_VAL;
         rows[row][i - 1]--;
         cols[col][i - 1]--;
         squares[getSquare(row, col)][i - 1]--;
@@ -38,7 +39,7 @@ const solveSudokoUtil = (gameBoard, rows, cols, squares, cell) => {
 };
 
 const isEmptyCell = (gameBoard, row, col) =>
-  gameBoard[row][col] === DEFAULT_VAL;
+  gameBoard[row][col].val === DEFAULT_VAL;
 
 const isValidMove = (rows, cols, squares, row, col, i) =>
   rows[row][i - 1] === 0 &&

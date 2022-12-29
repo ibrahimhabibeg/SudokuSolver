@@ -61,6 +61,9 @@ const styles = StyleSheet.create({
   errorCell: {
     backgroundColor: "rgba(255, 0, 0,.5)",
   },
+  solvedCell: {
+    color: "#006400",
+  },
 });
 
 export default styles;
